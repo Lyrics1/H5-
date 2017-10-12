@@ -1,0 +1,30 @@
+<!DOCTYPE HTML> 
+<html> 
+<head> 
+<meta charset="UTF-8">
+<title> 
+Background Worker Application Example 1: Complicated Number Computation 
+</title> 
+</head> 
+<body> 
+<div> 
+
+<!-- webworker 创建一个长期可以后台运行的线程，不会阻挡其他事件 -->
+The least common multiple and greatest common divisor is: 
+<p id="computation_results">please wait, computing … </p> 
+</div> 
+ <script >
+  var worker = new Worker('numberworker.js');
+  //使用 Worker()构造函数创建一个新的工作线程，它会返回一个代表此线程本身的线程对象。
+  worker.postMessage({first:3,second:3});
+    // worker.postMessage({name: 'monkey'});
+
+  worker.onmessage = function(event){
+  	document.getElementById('computation_results').innerHTML = event.data;
+
+  }
+  //postMessage 用来向后台脚本发送消息，onmessage 用以接收从后台脚本中传递过来的消息。
+
+ </script>
+</body> 
+</html>
