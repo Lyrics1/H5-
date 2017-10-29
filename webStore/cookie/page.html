@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Getcookie</title>
+</head>
+
+<body onload="initContent()">
+<div id="msg"></div>
+
+	
+	<script type="text/javascript">
+		//one
+		// console.log(GetCookieT("username"));
+		// deleteCookie("username");
+		function GetCookie(cookieName){
+			//获得cookie 字符串
+			var theCookie = ""+document.cookie;
+			//找到相应cookieName的位置
+			var index=theCookie.indexOf(cookieName);
+			//如果没有找到，返回空字符串
+			if(index == -1 || cookieName=="")
+				return "";
+			//从cookieName的开始位置找到”;“的位置
+			var indexT = theCookie.indexOf(";",index);
+			if(indexT==-1)
+				indexT=theCookie.length;
+
+			//读取相应cookie的值
+			return unescape(theCookie.substring(index+cookieName.length+1,indexT))
+		}
+
+		//two
+		function GetCookieT(cookieName){
+			var theCookie = "" + document.cookie;
+			var cookieList = theCookie.split(";");
+			var end=cookieList.length;
+			for(var i=0;i<end;i++){
+				var arryList  = cookieList[i].split("=");
+				if(cookieName==arryList[0])
+					return arryList[1];
+			}
+			return "";
+		}
+
+		function initContent(){
+			var username = GetCookie("username");
+			// console.log(username)
+			if(username && username.length>0){
+				$("msg").innerHTML = "<h2>欢迎TWO "+ username +"!</h2>"
+
+			}
+			else {
+				$("msg").innerHTML= "<a href='index.html'> 	请登录	</a>";	
+		}
+		function $(ID){
+			return document.getElementById(ID);
+		}
+
+		//删除指定名称的cookie
+		//方法思想就是设置cookie的时间已经过期就行
+		
+		 function deleteCookie(username){
+		 	var date = new Date();
+		 	var cookieName=GetCookie("username");
+		 	date.setTime(date.getTime()-100000000);
+		 	console.log(cookieName)
+		 	if(cookieName!=null){
+		 		document.cookie='username='+cookieName +";domain=localhost;expire =" +date.toGMTString();
+		 	}	
+		 }
+		 deleteCookie("username");
+	}
+	</script>
+</body>
+</html>

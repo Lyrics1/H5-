@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>insert</title>
+</head>
+<body>
+<button>insert</button>
+
+
+<script type="text/javascript">
+	var T=document.getElementsByTagName('button')[0]
+	T.onclick = function(){
+		$.ajax({
+			url:"../php/insert.php",
+			type:"post",
+			async:true,
+			success:function(){
+				alert("success");
+			},error:function(err){
+				alert(err);
+			}
+		})
+	}
+</script>
+<script src="../js/jquery.min.js"></script>
+</body>
+</html>
